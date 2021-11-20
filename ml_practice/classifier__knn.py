@@ -33,6 +33,6 @@ def knn_classify(
         reverse=True
     )
     
-    label_output = sorted_class_result[0][0] # [(label, value), (label, value), ...] 
+    label_output = sorted_class_stats[0][0] # [(label, value), (label, value), ...] 
         # choose the label with the max cnt value
     return label_output
