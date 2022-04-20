@@ -1,6 +1,8 @@
 import sys
 import os
+import datetime
 from collections import defaultdict
+
 
 def create_folder(
     folder_paths,
@@ -121,3 +123,36 @@ def scan_folder(
         pass
     
     return results
+
+
+def calculate_run_time(func):
+    from functools import wraps
+    
+    @wraps(func)
+    def wrapped(*arg):
+        time_format = "%Y-%m-%d %H:%M:%S"
+        start_time = datetime.datetime.now()
+        func(*arg)
+        end_time = datetime.datetime.now()
+        run_time = str(end_time - start_time).split(".")[0]
+        
+        msg = """
+        \r{divider}
+        \r* Function [{func_name}]
+        \r* START TIME: {start_time}
+        \r* END TIME: {end_time}
+        \r* RUN TIME: {run_time}
+        \r{divider}
+        """.format(
+            divider = "="*80,
+            func_name = func.__name__,
+            start_time = start_time,
+            end_time = end_time,
+            #start_time = start_time.strftime(time_format),
+            #end_time = end_time.strftime(time_format),
+            run_time = run_time
+        )
+        
+        print(msg)
+    
+    return wrapped
